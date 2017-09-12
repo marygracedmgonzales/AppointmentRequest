@@ -96,12 +96,10 @@ function initAjaxDropDown() {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(data);
             patientList = data;
             populatePatienListDropdown();
         },
         error: function (e) {
-            console.log(e);
             console.log("Error retrieving patient list.");
         }
     });
@@ -116,12 +114,9 @@ function ajaxGetAppointmentList() {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log("GetAppointmentList");
-            console.log(data);
             appointmentList = data;
         },
         error: function (e) {
-            console.log(e);
             console.log("Error retrieving patient list.");
         }
     });
@@ -134,7 +129,6 @@ function ajaxGetPhysician(physicianId) {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(data);
             $("#physician-schedule-table").empty();
             templateGetPhysician(data);
         },
@@ -152,7 +146,6 @@ function ajaxGetSchedule(selectedDate, physicianId) {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(data);
             appointmentSchedule = data;
             templateGetSchedule(data);
         },
@@ -206,7 +199,6 @@ function ajaxDeleteAppointmentRequest(toDeleteId) {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(data);
             if (data != null) {
                 errorNotification("success", "deleting appointment request");
             }
@@ -246,8 +238,6 @@ function ajaxFilterByIdAppointmentList(filteredPhysicianId) {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log("grace");
-            console.log(data);
             $('ViewPhysicianAppointmentList').html(data);
         },
         error: function () {
