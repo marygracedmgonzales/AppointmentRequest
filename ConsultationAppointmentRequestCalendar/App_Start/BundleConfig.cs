@@ -36,6 +36,9 @@ namespace ConsultationAppointmentRequestCalendar
 
             bundles.Add(new StyleBundle("~/Content/hims_appointment_styles").Include(
                         "~/Content/HIMS_Styles/hims_appointment.css"));
+
+            bundles.Add(new StyleBundle("~/Content/error_styles").Include(
+                        "~/Content/HIMS_Stylyes/error-page.css"));
         }
     }
 }

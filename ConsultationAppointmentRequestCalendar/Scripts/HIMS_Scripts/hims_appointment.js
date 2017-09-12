@@ -515,9 +515,11 @@ function filterAppointments() {
 
     $("#filterAppointmentBtn").on('click', function () {
         var filterId = $("#filterAppointmentPhysician").val();
-        $("#filterAppointmentResetBtn").prop("disabled", false);
-        $("#appointment-list-all").empty();
-        $("#filtered-result-appointment").load('/Appointment/ViewPhysicianAppointmentList?PhysicianId=' + filterId);
+        if (filterId != 0) {
+            $("#filterAppointmentResetBtn").prop("disabled", false);
+            $("#appointment-list-all").empty();
+            $("#filtered-result-appointment").load('/Appointment/ViewPhysicianAppointmentList?PhysicianId=' + filterId);
+        }
     });
 
     $("#filterAppointmentResetBtn").on('click', function () {

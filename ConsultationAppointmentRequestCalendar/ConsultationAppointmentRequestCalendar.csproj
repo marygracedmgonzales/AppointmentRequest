@@ -145,6 +145,7 @@
     <Content Include="Content\Icons\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\Icons\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Icons\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\Images\notfound.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -219,6 +220,8 @@
     <Content Include="Views\Physician\Index.cshtml" />
     <Content Include="Views\Appointment\ViewAppointmentList.cshtml" />
     <Content Include="Views\Appointment\_ViewPhysicianAppointmentList.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Home\NotFoundPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Time\" />
