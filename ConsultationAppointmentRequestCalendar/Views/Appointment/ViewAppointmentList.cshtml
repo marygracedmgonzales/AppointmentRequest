@@ -1,0 +1,124 @@
+﻿@model ConsultationAppointmentRequestCalendar.Models.ViewModel
+
+@{
+    ViewBag.Title = "ViewAppointmentList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Appointment List</h2>
+<div class="container div-filter-appointment">
+    <div class="col-lg-4 appointment-filterby-physician">
+        <span>Filter by physician </span>
+        <select class="form-control" id="filterAppointmentPhysician" name="filterAppointmentPhysician">
+            <option value="0">Select Physician...</option>
+            @foreach (var opt in Model.PhysicianViewList)
+            {
+                <option value="@Html.DisplayFor(modelItem => opt.PhysicianId)">@Html.DisplayFor(modelItem => opt.LastName), @Html.DisplayFor(modelItem => opt.FirstName) @Html.DisplayFor(modelItem => opt.MiddleName) -@Html.DisplayFor(modelItem => opt.Specialization)</option>
+            }
+        </select>
+    </div>
+    <div class="col-lg-2 appointment-btn-filter">
+        <div class="col-lg-6 appointment-btn-filter">
+            <button type="button" class="btn btn-default btn-appointment" id="filterAppointmentBtn" disabled>Go</button>
+        </div>
+        <div class="col-lg-6 appointment-btn-filter">
+            <button type="button" class="btn btn-default btn-appointment" id="filterAppointmentResetBtn" disabled>Reset</button>
+        </div>
+    </div>
+</div>
+
+<div id="appointment-list-all">
+@foreach (var physician in Model.PhysicianViewList)
+
+{
+    <div class="container view-physician-appointments-container">
+        <div class="view-physician">
+            <label>@physician.LastName, @physician.FirstName @physician.MiddleName - @physician.Specialization</label>
+        </div>
+        <div class="view-physician-appointments">
+            <table class="view-physician-appointments-table">
+                <tr class="table-head-label">
+                    <th class="tbl-id">Id</th>
+                    <th class="tbl-date">Date</th>
+                    <th class="tbl-day">Day</th>
+                    <th class="tbl-time">Time</th>
+                    <th class="tbl-patient">Patient Name</th>
+                    <th class="tbl-age">Age</th>
+                    <th class="tbl-purpose">Purpose</th>
+                    <th class="tbl-remarks">Remarks</th>
+                </tr>
+                @{Boolean result = false;}
+                @foreach (var appointment in Model.AppointmentViewList)
+                {
+                    if (appointment.PhysicianId == physician.PhysicianId)
+                    {
+                        result = true;
+                        <tr>
+                            <td class="tbl-id">@appointment.AppointmentId</td>
+                            <td class="tbl-date">@appointment.Date.ToString("MMM dd yyyy")</td>
+                            <td class="tbl-day">
+                                @{
+                                    var sched = physician.Schedule.Where(ps => ps.ScheduleId == appointment.ScheduleId);
+                                }
+                                @sched.ElementAt(0).Day.Substring(0, 3)
+                            </td>
+                            <td class="tbl-time">
+                                @{
+                                    var time = sched.ElementAt(0).Time.Where(t => t.TimeId == appointment.TimeId);
+                                    var from = time.ElementAt(0).StartTime < 12 ? time.ElementAt(0).StartTime + ":00AM" : (time.ElementAt(0).StartTime) + ":00PM";
+                                    var to = time.ElementAt(0).EndTime < 12 ? time.ElementAt(0).EndTime + ":00AM" : (time.ElementAt(0).EndTime) + ":00PM";
+                                }
+                                @from - @to
+                            </td>
+                            <td class="tbl-patient">
+                                @{
+                                    var patient = Model.PatientViewList.Where(pt => pt.PatientId == appointment.PatientId);
+                                }
+                                @patient.ElementAt(0).LastName, @patient.ElementAt(0).FirstName @patient.ElementAt(0).MiddleName
+                            </td>
+                            <td class="tbl-age">
+                                @patient.ElementAt(0).Age
+                            </td>
+                            <td class="tbl-purpose">
+                                @{var p = "";
+                                    switch (appointment.Purpose)
+                                    {
+                                        case 1:
+                                            p = "Consultation";
+                                            break;
+                                        case 2:
+                                            p = "Follow up";
+                                            break;
+                                        case 3:
+                                            p = "Laboratory";
+                                            break;
+                                        case 4:
+                                            p = "Others";
+                                            break;
+                                    }}
+                                @p
+                            </td>
+                            <td class="tbl-remarks">@appointment.Remarks</td>
+                        </tr>
+                                        }
+                                    }
+                @if (!result)
+                {
+                    <tr>
+                        <td colspan="8" class="no-record-found">No Appointment record(s) yet!</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    }
+</div>
+
+<div id="filtered-result-appointment"></div>
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/hims_appointment_scripts")
+@Styles.Render("~/Content/hims_appointment_styles")

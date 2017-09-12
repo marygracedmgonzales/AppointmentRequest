@@ -1,0 +1,87 @@
+﻿@model ConsultationAppointmentRequestCalendar.Models.ViewModel
+
+<h2>Partial</h2>
+
+
+
+    <div class="container view-physician-appointments-container">
+        <div class="view-physician">
+            <label>@Model.FilteredPhysician.LastName, @Model.FilteredPhysician.FirstName @Model.FilteredPhysician.MiddleName - @Model.FilteredPhysician.Specialization</label>
+        </div>
+        <div class="view-physician-appointments">
+            <table class="view-physician-appointments-table">
+                <tr class="table-head-label">
+                    <th class="tbl-id">Id</th>
+                    <th class="tbl-date">Date</th>
+                    <th class="tbl-day">Day</th>
+                    <th class="tbl-time">Time</th>
+                    <th class="tbl-patient">Patient Name</th>
+                    <th class="tbl-age">Age</th>
+                    <th class="tbl-purpose">Purpose</th>
+                    <th class="tbl-remarks">Remarks</th>
+                </tr>
+                @{Boolean result = false;}
+                @foreach (var filteredAppointment in Model.FilteredAppointment)
+                {
+                    if (filteredAppointment.PhysicianId == Model.FilteredPhysician.PhysicianId)
+                    {
+                        result = true;
+                        <tr>
+                            <td class="tbl-id">@filteredAppointment.AppointmentId</td>
+                            <td class="tbl-date">@filteredAppointment.Date.ToString("MMM dd yyyy")</td>
+                            <td class="tbl-day">
+                                @{
+                                    var sched = Model.FilteredPhysician.Schedule.Where(ps => ps.ScheduleId == filteredAppointment.ScheduleId);
+                                }
+                                @sched.ElementAt(0).Day.Substring(0, 3)
+                            </td>
+                            <td class="tbl-time">
+                                @{
+                                    var time = sched.ElementAt(0).Time.Where(t => t.TimeId == filteredAppointment.TimeId);
+                                    var from = time.ElementAt(0).StartTime < 12 ? time.ElementAt(0).StartTime + ":00AM" : (time.ElementAt(0).StartTime) + ":00PM";
+                                    var to = time.ElementAt(0).EndTime < 12 ? time.ElementAt(0).EndTime + ":00AM" : (time.ElementAt(0).EndTime) + ":00PM";
+                                }
+                                @from - @to
+                            </td>
+                            <td class="tbl-patient">
+                                @{
+                                    var patient = Model.PatientViewList.Where(pt => pt.PatientId == filteredAppointment.PatientId);
+                                }
+                                @patient.ElementAt(0).LastName, @patient.ElementAt(0).FirstName @patient.ElementAt(0).MiddleName
+                            </td>
+                            <td class="tbl-age">
+                                @patient.ElementAt(0).Age
+                            </td>
+                            <td class="tbl-purpose">
+                                @{var p = "";
+                                    switch (filteredAppointment.Purpose)
+                                    {
+                                        case 1:
+                                            p = "Consultation";
+                                            break;
+                                        case 2:
+                                            p = "Follow up";
+                                            break;
+                                        case 3:
+                                            p = "Laboratory";
+                                            break;
+                                        case 4:
+                                            p = "Others";
+                                            break;
+                                    }}
+                                @p
+                            </td>
+                            <td class="tbl-remarks">@filteredAppointment.Remarks</td>
+                        </tr>
+                                        }
+                                    }
+                @if (!result)
+                {
+                    <tr>
+                        <td colspan="8" class="no-record-found">No Appointment record(s) yet!</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+

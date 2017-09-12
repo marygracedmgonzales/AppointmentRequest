@@ -1,0 +1,117 @@
+﻿.btn-appointment{
+    padding: 3px 10px;
+    margin: 3px;
+    width: 100%;
+}
+
+.btn-preview-appointment{
+    padding: 3px 10px;
+    margin: 3px;
+    width: 100px;
+}
+
+.field-appointment-preview{
+    margin: 3px 0px;
+}
+
+#appointmentRemarks{
+    max-width: none;
+    width: 100% !important;
+    resize: none;
+}
+
+.margin-top-0{
+    margin-top: 0px !important;
+}
+
+.appointment-select-physician{
+    margin-top: 30px;
+}
+
+#selectedDate, #filterAppointmentDate{
+    width: 210px !important; 
+    cursor: pointer;
+    background: #FFFFFF;
+}
+
+#appointmentPatient{
+    max-width: 100% !important;
+    margin: 10px 0px;
+}   
+
+.appointment-div{
+    min-height: 640px;
+}
+
+.view-physician-appointments-container{
+    border: 1px solid #aaa;
+    min-height: 100px;
+    margin-bottom: 1px;
+    padding: 20px;
+}
+
+.table-head-label{
+    border-bottom: 1px solid #ccc;
+    font-size: 13px;
+}
+
+.table-head-label th{
+    text-align: center;
+}
+
+.view-physician-appointments-table tr td{
+    padding: 10px;
+    font-size: 13px;
+}
+
+.view-physician{
+    padding-bottom: 10px;
+}
+
+.tbl-id{
+    width: 20px;
+}
+
+.tbl-date{
+    width: 95px;
+}
+
+.tbl-day{
+    width: 20px;
+}
+
+.tbl-time{
+    width: 140px;
+}
+
+.tbl-patient{
+    width: 230px;
+}
+
+.tbl-age{
+    width: 20px;
+}
+
+.tbl-purpose{
+    width: 100px;
+}
+
+.tbl-remarks{
+    width: 280px;
+}
+
+.no-record-found{
+    text-align:center;
+}
+
+.div-filter-appointment{
+    padding: 20px 0;
+}
+
+.div-filter-appointment div{
+    padding: 0px 0;
+}
+
+.appointment-btn-filter{
+    padding-top: 10px !important;
+}

@@ -1,0 +1,126 @@
+﻿@model IEnumerable<ConsultationAppointmentRequestCalendar.Models.Physician>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Appointments</h2>
+
+<div class="appointment-select-physician pull-right">
+    <div class="appointment-physicians-dropdown">
+        <select class="form-control" id="appointmentPhysician" name="appointmentPhysician">
+            <option value="0" class="active">Select Physician...</option>
+            @foreach (var item in Model)
+            {
+                <option value="@Html.DisplayFor(modelItem => item.PhysicianId)">@Html.DisplayFor(modelItem => item.LastName), @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName)</option>
+            }
+        </select>
+    </div>
+</div>
+<br />
+<div class="appointment-div">
+    <div class="container">
+        <h4><strong id="appointmentSpecialization"></strong></h4>
+        <label id="appointmentPhysicianName"></label>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="container" id="alertDiv"></div>
+        <div class="col-lg-4">
+            <div class="appointment-div-calendar">
+                <label>Schedule : </label>
+                <span id="physician-schedule-noavailable">No available schedule.</span>
+                <table id="physician-schedule-table"></table>
+            </div>
+            <br/>
+            <div class="appointment-div-calendar">
+                <label>Select date : </label>
+                <div>
+                    <input class="form-control datepicker" disabled id="selectedDate" name="selectedDate" />
+                </div>
+            </div>
+            <br />
+            <div>
+                <label>Set an appointment: </label>
+                <span id="physician-time-noavailable">No available time.</span>
+                <table id="scheduledTimeTable"></table>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="appointmentIdDiv" class="container appointmentIdDiv">
+                <div class="container">
+                    <div class="preview-header"><label>Appointment Id : <span id="appointmentId"></span> </label></div>
+                </div>
+            </div>
+            <div class="appointmentDetailsDiv">
+                <div class="container patientDetails">
+                    <div class="col-lg-12 field-appointment-preview">
+                        <select class="form-control" id="appointmentPatient" name="appointmentPatient" disabled>
+                            <option value="0" class="active">Select Patient...</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 field-appointment-preview">
+                        <label>Patient Id : </label>
+                        <span id="appointmentPatientId"></span>
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <label>Firstname : </label>
+                        <span id="appointmentFName"></span>
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <label>MiddleName : </label>
+                        <span id="appointmentMname"></span>
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <label>LastName : </label>
+                        <span id="appointmentLName"></span>
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <label>Age : </label>
+                        <span id="appointmentAge"></span>
+                    </div>
+                </div>
+                <div class="container appointmentDetails">
+                    <div class="col-lg-6 field-appointment-preview margin-top-0">
+                        <label>Date : </label>
+                        <span id="appointmentDate"></span>
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <label>Day : </label>
+                        <span id="appointmentDay"></span>
+                    </div>
+                    <div class="col-lg-12 field-appointment-preview">
+                        <label>Time : </label>
+                        <span id="appointmentTime"></span>
+                    </div>
+                    <div class="col-lg-12 field-appointment-preview">
+                        <label>Purpose : </label> <br />
+                        <select class="form-control" id="appointmentPurpose" name="appointmentPurpose" disabled >
+                            <option value="1">Consultation</option>
+                            <option value="2">Follow up</option>
+                            <option value="3">Laboratory</option>
+                            <option value="4">Others</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 field-appointment-preview">
+                        <label>Remarks : </label> <br />
+                        <textarea class="form-control" rows="5" id="appointmentRemarks" disabled ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="appointmentBtnDiv" class="container appointmentBtnDiv">
+                 <div class="container">
+                    <button id="appointmentBtnSave" type="button" class="btn btn-default btn-preview-appointment pull-right hidden">Save</button>
+                    <button id="appointmentBtnEdit" type="button" class="btn btn-default btn-preview-appointment pull-right hidden">Edit</button>
+                    <button id="appointmentBtnCancel" type="button" class="btn btn-default btn-preview-appointment pull-right hidden">Cancel</button>
+                    <button id="appointmentBtnDelete" type="button" class="btn btn-default btn-preview-appointment pull-right hidden">Delete</button>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/hims_appointment_scripts")
+@Styles.Render("~/Content/hims_appointment_styles")

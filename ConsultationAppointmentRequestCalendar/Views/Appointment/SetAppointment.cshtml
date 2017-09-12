@@ -1,0 +1,91 @@
+﻿@model ConsultationAppointmentRequestCalendar.Models.Physician
+
+@{
+    ViewBag.Title = "SetAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br/>
+<div>
+    <h4><strong>@Html.DisplayFor(model => model.Specialization)</strong></h4>
+    <label>Physician @Html.DisplayFor(model => model.LastName), @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.MiddleName)</label>
+    <hr />
+    <div class="container">
+        <div class="col-lg-4">
+            <label>Calendar</label>
+            <div>
+                <span> Select date : </span>
+                <input class="form-control datepicker" id="selectedDate" name="selectedDate"/>
+            </div>
+            <div>
+                <span>Schedule</span>                
+                @foreach (var sched in Model.Schedule)
+                {
+                    <div>
+                        <label>@sched.Day </label>
+                        <span> @(sched.Time.FirstOrDefault().StartTime < 12 ? @sched.Time.FirstOrDefault().StartTime + ":00AM" : (@sched.Time.FirstOrDefault().StartTime - 12)+":00PM") - @(sched.Time.LastOrDefault().EndTime < 12 ? @sched.Time.LastOrDefault().EndTime + ":00AM" : (@sched.Time.LastOrDefault().EndTime - 12)+":00PM")</span>
+                    </div>
+                }
+            </div>
+            <div>
+                <span>Set an appointment</span>
+                <table id="scheduledTimeTable"></table>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="appointmentIdDiv" class="container appointmentIdDiv"></div>
+            <div class="appointmentDetailsDiv">
+                <div class="container patientDetails">
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>Firstname : </span> <br />
+                        <input class="form-control" type="text" id="appointmentFName" name="appointmentFName" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>MiddleName : </span> <br />
+                        <input class="form-control" type="text" id="appointmentMname" name="appointmentMname" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>LastName : </span> <br />
+                        <input class="form-control" type="text" id="appointmentLName" name="appointmentLName" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>Age : </span> <br />
+                        <input class="form-control" type="text" id="age" name="appointmentAge" />
+                    </div>
+                </div>
+                <div class="container appointmentDetails">
+                    <div class="col-lg-6 field-appointment-preview margin-top-0">
+                        <span>Date : </span> <br />
+                        <input class="form-control datepicker" id="appointmentDate" name="appointmentDate" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>Day : </span> <br />
+                        <input class="form-control" type="text" id="appointmentDay" name="appointmentDay" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>Time : </span> <br />
+                        <input class="form-control" type="text" id="appointmentTime" name="appointmentTime" />
+                    </div>
+                    <div class="col-lg-6 field-appointment-preview">
+                        <span>Purpose : </span> <br />
+                        <select class="form-control" id="appointmentPurpose" name="appointmentPurpose">
+                            <option value="1">Consultation</option>
+                            <option value="2">Follow up</option>
+                            <option value="3">Laboratory</option>
+                            <option value="4">Others</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 field-appointment-preview margin-top-120">
+                        <span>Remarks : </span> <br />
+                        <textarea class="form-control" rows="5" id="appointmentRemarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="appointmentBtnDiv" class="container appointmentBtnDiv"></div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/hims_appointment_scripts")
+@Styles.Render("~/Content/hims_appointment_styles")
