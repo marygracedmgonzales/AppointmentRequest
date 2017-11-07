@@ -47,6 +47,7 @@ function initFunctions() {
         $("#appointmentPhysicianName").text("");
         $("#scheduledTimeTable").empty();
         $("#selectedDate").val("");
+        clearAppointmentData();
         if (physicianId != 0) {
             ajaxGetPhysician(physicianId);
         }
@@ -58,7 +59,7 @@ function initFunctions() {
     
     $("#selectedDate").on('changeDate', function () {
         hideButtons();
-        clearAppointmentData()
+        clearAppointmentData();
         var selectedDate = $("#selectedDate").val();
         ajaxGetSchedule(selectedDate, physicianId);
     });

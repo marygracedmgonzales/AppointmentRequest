@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0f451120-bb1e-47ea-a793-e6bce95d007c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:61883/AppointmentRequest.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AppointmentRequest.wsdl" MetadataType="Wsdl" ID="81d6a2fb-fc35-44ee-9aec-79344f5142b4" SourceId="1" SourceUrl="http://localhost:61883/AppointmentRequest.svc?wsdl" />
+    <MetadataFile FileName="AppointmentRequest2.xsd" MetadataType="Schema" ID="6bbbeb7a-827d-4bea-a303-494ff7c78284" SourceId="1" SourceUrl="http://localhost:61883/AppointmentRequest.svc?xsd=xsd2" />
+    <MetadataFile FileName="AppointmentRequest.xsd" MetadataType="Schema" ID="f7b429cb-915d-4c13-b79a-685bfeb983ab" SourceId="1" SourceUrl="http://localhost:61883/AppointmentRequest.svc?xsd=xsd1" />
+    <MetadataFile FileName="AppointmentRequest1.xsd" MetadataType="Schema" ID="fcaac2f5-7839-4bc3-becb-ad421a113cda" SourceId="1" SourceUrl="http://localhost:61883/AppointmentRequest.svc?xsd=xsd0" />
+    <MetadataFile FileName="AppointmentRequest.disco" MetadataType="Disco" ID="0dea638c-6aa8-44e6-a129-2db580179250" SourceId="1" SourceUrl="http://localhost:61883/AppointmentRequest.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

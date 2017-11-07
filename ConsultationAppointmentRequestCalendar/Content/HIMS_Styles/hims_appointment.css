@@ -94,10 +94,12 @@
 
 .tbl-purpose{
     width: 100px;
+    text-align: center;
 }
 
 .tbl-remarks{
     width: 280px;
+    text-align: center;
 }
 
 .no-record-found{
