@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AppointmentRequestWCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AppointmentRequestWCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfPhysicianEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PhysicianEntity" nillable="true" type="tns:PhysicianEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPhysicianEntity" nillable="true" type="tns:ArrayOfPhysicianEntity" />
+  <xs:complexType name="PhysicianEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhysicianId" type="xs:int" />
+      <xs:element minOccurs="0" name="Schedule" nillable="true" type="tns:ArrayOfScheduleEntity" />
+      <xs:element minOccurs="0" name="Specialization" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PhysicianEntity" nillable="true" type="tns:PhysicianEntity" />
+  <xs:complexType name="ArrayOfScheduleEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ScheduleEntity" nillable="true" type="tns:ScheduleEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfScheduleEntity" nillable="true" type="tns:ArrayOfScheduleEntity" />
+  <xs:complexType name="ScheduleEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Day" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScheduleId" type="xs:int" />
+      <xs:element minOccurs="0" name="Time" nillable="true" type="tns:ArrayOfTimeEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ScheduleEntity" nillable="true" type="tns:ScheduleEntity" />
+  <xs:complexType name="ArrayOfTimeEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeEntity" nillable="true" type="tns:TimeEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTimeEntity" nillable="true" type="tns:ArrayOfTimeEntity" />
+  <xs:complexType name="TimeEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndTime" type="xs:int" />
+      <xs:element minOccurs="0" name="StartTime" type="xs:int" />
+      <xs:element minOccurs="0" name="TimeId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeEntity" nillable="true" type="tns:TimeEntity" />
+  <xs:complexType name="ArrayOfAppointmentEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AppointmentEntity" nillable="true" type="tns:AppointmentEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAppointmentEntity" nillable="true" type="tns:ArrayOfAppointmentEntity" />
+  <xs:complexType name="AppointmentEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppointmentId" type="xs:int" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PatientId" type="xs:int" />
+      <xs:element minOccurs="0" name="PhysicianId" type="xs:int" />
+      <xs:element minOccurs="0" name="PurposeId" type="xs:int" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScheduleId" type="xs:int" />
+      <xs:element minOccurs="0" name="TimeId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AppointmentEntity" nillable="true" type="tns:AppointmentEntity" />
+  <xs:complexType name="ArrayOfPatientEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PatientEntity" nillable="true" type="tns:PatientEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPatientEntity" nillable="true" type="tns:ArrayOfPatientEntity" />
+  <xs:complexType name="PatientEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Age" type="xs:int" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PatientId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PatientEntity" nillable="true" type="tns:PatientEntity" />
+</xs:schema>

@@ -13,25 +13,8 @@ namespace ConsultationAppointmentRequestCalendar.Models
         public Physician FilteredPhysician { get; set; }
         public IList<Appointment> FilteredAppointment { get; set; }
         public IList<Appointment> AppointmentViewList { get; set; }
-        private IList<Patient> _patientList;
-        public IList<Patient> PatientViewList
-        {
-            get { return _patientList; }
-            set
-            {
-                _patientList = _SeedData.PatientList;
-            }
-        }
-
-        private IList<Physician> _physicianList;
-        public IList<Physician> PhysicianViewList
-        {
-            get { return _physicianList; }
-            set
-            {
-                _physicianList = _SeedData.PhysicianList;
-            }
-        }
+        public IList<Patient> PatientViewList { get; set; }
+        public IList<Physician> PhysicianViewList { get; set; }
 
         public ViewModel()
         {

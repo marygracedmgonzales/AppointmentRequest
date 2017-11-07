@@ -7,43 +7,32 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using ConsultationAppointmentRequestCalendar.Adapter;
 
 namespace ConsultationAppointmentRequestCalendar.Controllers
 {
     public class AppointmentController : Controller
     {
-        List<Appointment> AppointmentList = new List<Appointment>();
-        
+        AppointmentServiceAdapter adapter = new AppointmentServiceAdapter();
+               
         public ActionResult Index()
         {
-            return View(_SeedData.PhysicianList);
+            return View(adapter.getPhysicians());
         }
-
+        
         public ActionResult GetPhysician(int PhysicianId)
         {
-            var doctor = _SeedData.PhysicianList.Where(s => s.PhysicianId == PhysicianId).FirstOrDefault();
-            return Json(doctor, JsonRequestBehavior.AllowGet);
+            return Json(adapter.getPhysician(PhysicianId), JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult GetAppointmentList()
-        {
-            using (StreamReader sr = new StreamReader(Server.MapPath("~/App_Data/Appointments.txt")))
-            {
-                AppointmentList = JsonConvert.DeserializeObject<List<Appointment>>(sr.ReadToEnd());
-            }
-            return Json(AppointmentList, JsonRequestBehavior.AllowGet);
-        }
-
+        
         public ActionResult SetAppointment(int PhysicianId)
         {
-            var doctor = _SeedData.PhysicianList.Where(s => s.PhysicianId == PhysicianId).FirstOrDefault();
-
-            return View(doctor);
+            return View(adapter.setAppointment(PhysicianId));
         }
         
         public ActionResult GetSchedule(int PhysicianId, DateTime SelectedDate)
         {
-            var doctor = _SeedData.PhysicianList.Where(d => d.PhysicianId == PhysicianId).FirstOrDefault();
+            var doctor = adapter.getPhysician(PhysicianId);
             var schedule = doctor.Schedule.Where(s => s.Day == Convert.ToString(SelectedDate.DayOfWeek)).FirstOrDefault();
             IList<Appointment> appointments = new List<Appointment>();
             Dictionary<string, Object> appointmentObject = new Dictionary<string, Object>();
@@ -52,80 +41,84 @@ namespace ConsultationAppointmentRequestCalendar.Controllers
             {
                 if (schedule != null)
                 {
-                    GetAppointmentList();
-                    appointments = AppointmentList.Where(a => a.PhysicianId == PhysicianId && a.ScheduleId == schedule.ScheduleId && a.Date == SelectedDate).ToList();
+                    List<Appointment> appointmentListDB = adapter.getAppointmentList();
+                    if(appointmentListDB.Count() != 0)
+                    {
+                        appointments = appointmentListDB.Where(a => a.PhysicianId == PhysicianId && a.ScheduleId == schedule.ScheduleId && a.Date == SelectedDate).ToList();
+                    }
                 }
                 
             }
-            catch (ArgumentNullException e)
-            {throw;}
+            catch (ArgumentNullException ex)
+            {throw ex;}
             
             appointmentObject["schedule"] = schedule;
             appointmentObject["appointments"] = appointments;
 
             return Json(appointmentObject, JsonRequestBehavior.AllowGet);
         }
-
+        
         public ActionResult GetPatientList()
         {
-            return Json(_SeedData.PatientList, JsonRequestBehavior.AllowGet);
+            return Json(adapter.getPatientList(), JsonRequestBehavior.AllowGet);
         }
         
         [HttpPost]
         public ActionResult SaveAppointment(Appointment AppointmentRequest)
         {
-            GetAppointmentList();
-            AppointmentRequest.AppointmentId = AppointmentList.OfType<Appointment>().LastOrDefault().AppointmentId + 1;
-            AppointmentList.Add(AppointmentRequest);
+            bool isSaved = false;
+            List<Appointment> appointmentListDBUpdated = new List<Appointment>();
 
-            string json = JsonConvert.SerializeObject(AppointmentList.ToArray());
-            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/Appointments.txt"), json);
-            GetAppointmentList();
-
-            return Json(AppointmentList, JsonRequestBehavior.AllowGet);
+            isSaved = adapter.saveAppointment(AppointmentRequest);
+            if (isSaved)
+            {
+                appointmentListDBUpdated = adapter.getAppointmentList();
+            }
+            return Json(appointmentListDBUpdated, JsonRequestBehavior.AllowGet);
         }
-
+        
         [HttpPost]
         public ActionResult UpdateAppointment(Appointment UpdatedRequest)
         {
-            GetAppointmentList();
-            int index = AppointmentList.FindIndex(a => a.AppointmentId == UpdatedRequest.AppointmentId);
-            AppointmentList[index] = UpdatedRequest;
-            
-            string json = JsonConvert.SerializeObject(AppointmentList.ToArray());
-            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/Appointments.txt"), json);
-            GetAppointmentList();
+            bool isUpdated = false;
+            List<Appointment> appointmentListDBUpdated = new List<Appointment>();
 
-            return Json(AppointmentList, JsonRequestBehavior.AllowGet);
+            isUpdated = adapter.updateAppointment(UpdatedRequest);
+            if(isUpdated)
+            {
+                appointmentListDBUpdated = adapter.getAppointmentList();
+            }
+            return Json(appointmentListDBUpdated, JsonRequestBehavior.AllowGet);
         }
         
         public ActionResult DeleteAppointment(int toDeleteId)
         {
-            GetAppointmentList();
+            bool isDeleted = false;
+            List<Appointment> appointmentListDBUpdated = new List<Appointment>();
 
-            var appointmentToDelete = AppointmentList.Find(a => a.AppointmentId == toDeleteId);
-            if (appointmentToDelete != null) AppointmentList.Remove(appointmentToDelete);
-            
-            string json = JsonConvert.SerializeObject(AppointmentList.ToArray());
-            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/Appointments.txt"), json);
-            GetAppointmentList();
-
-            return Json(AppointmentList, JsonRequestBehavior.AllowGet);
+            isDeleted = adapter.deleteAppointment(toDeleteId);
+            if (isDeleted)
+            {
+                appointmentListDBUpdated = adapter.getAppointmentList();
+            }
+            return Json(appointmentListDBUpdated, JsonRequestBehavior.AllowGet);
         }
-
+        
         public ActionResult ViewAppointmentList()
         {
-            GetAppointmentList();
             ViewModel model = new ViewModel();
-            model.AppointmentViewList = AppointmentList;
+            model.PatientViewList = adapter.getPatientList();
+            model.PhysicianViewList = adapter.getPhysicians();
+            model.AppointmentViewList = adapter.getAppointmentList();
             return View("ViewAppointmentList", model);
         }
-
+        
         public ActionResult ViewPhysicianAppointmentList(int PhysicianId)
         {
-            GetAppointmentList();
             ViewModel model = new ViewModel();
-            model.AppointmentViewList = AppointmentList;
+            model.PatientViewList = adapter.getPatientList();
+            model.PhysicianViewList = adapter.getPhysicians();
+            model.AppointmentViewList = adapter.getAppointmentList();
 
             Physician physicianFiltered = new Physician();
             physicianFiltered = model.PhysicianViewList.Where(fp => fp.PhysicianId == PhysicianId).FirstOrDefault();
